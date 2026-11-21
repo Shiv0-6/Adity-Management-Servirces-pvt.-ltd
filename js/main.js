@@ -102,19 +102,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   counters.forEach(c => counterObserver.observe(c));
 
-  // Contact form
+  // Contact form → WhatsApp redirect
   const form = document.querySelector('#contactForm');
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const btn = form.querySelector('.btn-submit');
-      btn.textContent = 'Message Sent!';
-      btn.style.background = '#2e7d32';
-      setTimeout(() => {
-        btn.textContent = 'Send Message';
-        btn.style.background = '';
-        form.reset();
-      }, 3000);
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const product = document.getElementById('product');
+      const productText = product.options[product.selectedIndex].text;
+      const message = document.getElementById('message').value.trim();
+
+      const text = `Hello Adity Fire Protection,\n\n`
+        + `*Name:* ${name}\n`
+        + `*Phone:* ${phone}\n`
+        + `*Email:* ${email}\n`
+        + `*Product Interest:* ${productText}\n`
+        + `*Message:* ${message}`;
+
+      const waURL = `https://wa.me/918750413041?text=${encodeURIComponent(text)}`;
+      window.open(waURL, '_blank');
     });
   }
 });
